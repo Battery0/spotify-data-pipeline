@@ -2,3 +2,4 @@
 spotify-data-pipeline.iml
 venv/
 .env
+__pycache__/
