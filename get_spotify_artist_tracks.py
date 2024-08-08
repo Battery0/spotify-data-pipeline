@@ -12,7 +12,6 @@ def artist_albums(artist_id):
 def spotify_album_data(artist_id, group_type):
     bearer_token = spotify_auth()["access_token"]
     headers = {"Authorization": f"Bearer {bearer_token}"}
-    print(headers)
 
     album_data = []
 
@@ -32,6 +31,3 @@ def spotify_album_data(artist_id, group_type):
                 album_data.append(response_json)
 
     return album_data
-
-aphex_twin_id = "6kBDZFXuLrZgHnvmPu9NsG"
-pprint.pp(artist_albums(aphex_twin_id))
