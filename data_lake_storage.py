@@ -9,11 +9,9 @@ def upload_to_gcs_data_lake(bucket_name, contents_to_upload, data_type, destinat
 
     blob.upload_from_string(data=contents_to_upload, content_type=data_type)
 
-    print(f"{destination_blob_name} with contents {contents_to_upload} uploaded to {bucket_name}.")
-
 
 upload_to_gcs_data_lake(
     bucket_name="spotify-artist-data",
     contents_to_upload=str(artist_albums("6kBDZFXuLrZgHnvmPu9NsG")),
     data_type="json",
-    destination_blob_name="spotify-album-data")
+    destination_blob_name="spotify-artist-complete-album-data")
