@@ -1,5 +1,4 @@
 from google.cloud import storage
-from get_spotify_artist_tracks import artist_albums
 
 
 def upload_from_memory_to_data_lake(bucket_name, contents_to_upload, data_type, destination_blob_name):
