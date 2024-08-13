@@ -1,6 +1,5 @@
 import requests
 from spotify_auth import spotify_auth
-import pprint
 
 
 def artist_albums(artist_id):
