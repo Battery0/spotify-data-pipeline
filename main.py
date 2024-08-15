@@ -3,9 +3,6 @@ from data_lake_storage import upload_to_data_lake
 
 
 def main():
-    if __name__ == '__main__':
-        main()
-
     artist_id = "6kBDZFXuLrZgHnvmPu9NsG"
 
     album_data = spotify_album_data(
@@ -19,3 +16,7 @@ def main():
         data_type="json",
         destination_blob_name="spotify-artist-complete-album-data"
     )
+
+
+if __name__ == '__main__':
+    main()
