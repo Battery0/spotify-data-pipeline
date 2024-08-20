@@ -2,8 +2,8 @@ import requests
 from spotify_auth import spotify_auth
 
 
-def spotify_album_data(artist_id, group_type):
-    bearer_token = spotify_auth()["access_token"]
+def spotify_album_data(spotify_auth, artist_id, group_type):
+    bearer_token = spotify_auth["access_token"]
     headers = {"Authorization": f"Bearer {bearer_token}"}
     print(bearer_token)
     album_data = []
