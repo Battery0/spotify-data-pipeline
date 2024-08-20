@@ -24,3 +24,7 @@ def spotify_album_data(artist_id, group_type):
                 album_data.append(response_json)
 
     return album_data
+
+
+def extract_album_id():
+
