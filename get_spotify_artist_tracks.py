@@ -1,11 +1,9 @@
 import requests
-from spotify_auth import spotify_auth
 
 
 def spotify_album_data(spotify_auth_json, artist_id, group_type):
     bearer_token = spotify_auth_json["access_token"]
     headers = {"Authorization": f"Bearer {bearer_token}"}
-    print(bearer_token)
     album_data = []
 
     for album_type in group_type:
@@ -50,8 +48,17 @@ def chunk_album_ids(album_id):
 
 def spotify_detailed_album_info(spotify_auth_json, album_ids):
     bearer_token = spotify_auth_json["access_token"]
-    print(bearer_token)
     headers = {"Authorization": f"Bearer {bearer_token}"}
     detailed_album_data = []
 
-    url_endpoint = f"https://api.spotify.com/v1/albums"
+    print(bearer_token)
+
+    for set_of_ids in album_ids:
+        for id in set_of_ids:
+            url_endpoint = f"https://api.spotify.com/v1/albums?ids={id}"
+
+            json_response = requests.get(url=url_endpoint, headers=headers).json()
+
+            detailed_album_data.append(json_response)
+
+    print(detailed_album_data)
