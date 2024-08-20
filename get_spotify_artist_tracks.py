@@ -26,5 +26,11 @@ def spotify_album_data(artist_id, group_type):
     return album_data
 
 
-def extract_album_id():
+def extract_album_id(album_data):
+    album_id = {}
 
+    for album_type in album_data:
+        for album in album_type["items"]:
+            album_id[f"{album['name']}"] = album["id"]
+
+    return album_id
