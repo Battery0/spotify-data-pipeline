@@ -5,7 +5,7 @@ from spotify_auth import spotify_auth
 def spotify_album_data(artist_id, group_type):
     bearer_token = spotify_auth()["access_token"]
     headers = {"Authorization": f"Bearer {bearer_token}"}
-
+    print(bearer_token)
     album_data = []
 
     for album_type in group_type:
@@ -33,4 +33,16 @@ def extract_album_id(album_data):
         for album in album_type["items"]:
             album_id[f"{album['name']}"] = album["id"]
 
-    return album_id
+    chunk_ids = chunk_album_ids(album_id)
+
+    return chunk_ids
+
+
+def chunk_album_ids(album_id):
+    split_ids = []
+
+    for num in range(0, len(album_id), 20):
+        set_of_twenty_id = list(album_id.values())[num:num+20]
+        split_ids.append(set_of_twenty_id)
+
+    return split_ids
