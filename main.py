@@ -1,4 +1,4 @@
-from get_spotify_artist_tracks import spotify_album_data, extract_album_id, spotify_detailed_album_info
+from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from data_lake_storage import upload_to_data_lake
 from spotify_auth import spotify_auth
 

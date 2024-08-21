@@ -1,5 +1,5 @@
 import pandas as pd
-from get_spotify_artist_tracks import spotify_album_data
+from spotify_artist_albums import spotify_album_data
 
 
 def json_to_flattened_csv(json_data):
