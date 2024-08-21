@@ -51,8 +51,6 @@ def spotify_detailed_album_info(spotify_auth_json, album_ids):
     headers = {"Authorization": f"Bearer {bearer_token}"}
     detailed_album_data = []
 
-    print(bearer_token)
-
     for set_of_ids in album_ids:
         for id in set_of_ids:
             url_endpoint = f"https://api.spotify.com/v1/albums?ids={id}"
@@ -61,4 +59,4 @@ def spotify_detailed_album_info(spotify_auth_json, album_ids):
 
             detailed_album_data.append(json_response)
 
-    print(detailed_album_data)
+    return detailed_album_data
