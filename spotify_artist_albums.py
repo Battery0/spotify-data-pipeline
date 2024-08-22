@@ -16,7 +16,7 @@ def spotify_album_data(spotify_auth_json, artist_id, group_type):
             album_data.append(response_json)
         else:
             album_data.append(response_json)
-            while response_json["next"] is not None:
+            while response_json["next"] is not None and len(response_json["items"]) > 50:
                 next_call = response_json["next"]
                 response_json = requests.get(url=next_call, headers=headers).json()
                 album_data.append(response_json)
