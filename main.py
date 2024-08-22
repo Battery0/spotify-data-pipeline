@@ -1,6 +1,7 @@
 from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from data_lake_storage import upload_to_data_lake
 from spotify_auth import spotify_auth
+from transform_json import flatten_json
 
 
 def main():
@@ -26,6 +27,11 @@ def main():
     detailed_album_info = spotify_detailed_album_info(
         spotify_auth_json=spotify_auth_json,
         album_ids=album_ids)
+
+    flat_json = flatten_json(
+        detailed_album_info=detailed_album_info,
+        artist_id=artist_id
+    )
 
 
 if __name__ == '__main__':

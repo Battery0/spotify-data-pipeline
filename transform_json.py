@@ -1,19 +1,12 @@
-import pandas as pd
-from spotify_artist_albums import spotify_album_data
+def flatten_json(detailed_album_info, artist_id):
+    flattened_track_info = []
+
+    for albums in detailed_album_info:  # list - of 54 albums - looping over every album
+        album_tracks = albums["albums"][0]["tracks"]["items"]
+        for track in album_tracks:
+            if artist_id_check(track, artist_id): flattened_track_info.append({"name": f"{track['name']}"})
 
 
-def json_to_flattened_csv(json_data):
-    df = pd.json_normalize(json_data,
-                           record_path=["items", "artists"],
-                           meta=[["items", "album_group"]])
-    df.rename(columns={"items.album_group": "album_group"}, inplace=True)
-
-    df.to_clipboard()
-    print(df)
-
-
-json_to_flattened_csv(
-    spotify_album_data("6kBDZFXuLrZgHnvmPu9NsG",
-                       ["album", "single", "appears_on", "compilation"]
-                       )
-)
+def artist_id_check(track, artist_id):
+    for artist in track["artists"]:
+        if artist["id"] == artist_id: return True
