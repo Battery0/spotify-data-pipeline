@@ -8784,14 +8784,22 @@ list_of_albums = [{
 
 
 def extract_data(albums, artist_id):
-    track_artist_names = []
+    flattened_track_data = []
 
     for album in albums:
         for track_data in album["tracks"]["items"]:
             id_check = artist_id_check(track_data=track_data, artist_id=artist_id)
             if id_check:
-                names = extract_track_artist_names(track_data)
+                artist_names = extract_track_artist_names(track_data)
+                track_title = extract_track_title(track_data)
+
                 # rest of data extraction calls go here
+                flattened_track_data.append({
+                    "artist_name": artist_names,
+                    "track_title": track_title
+                })
+
+    print(flattened_track_data)
 
 
 def artist_id_check(track_data, artist_id):
@@ -8807,6 +8815,10 @@ def extract_track_artist_names(track_data):
     for artist in track_data["artists"]:
         track_artists.append(artist["name"])
     return track_artists
+
+
+def extract_track_title(track_data):
+    return track_data["name"]
 
 
 extract_data(list_of_albums, "6kBDZFXuLrZgHnvmPu9NsG")
