@@ -1,7 +1,7 @@
-from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from data_lake_storage import upload_to_data_lake
+from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from spotify_auth import spotify_auth
-from transform_json import flatten_json
+from transform_json import get_flat_track_data
 
 
 def main():
@@ -24,12 +24,12 @@ def main():
         destination_blob_name="spotify-artist-complete-album-data"
     )
 
-    detailed_album_info = spotify_detailed_album_info(
+    detailed_albums_data = spotify_detailed_album_info(
         spotify_auth_json=spotify_auth_json,
         album_ids=album_ids)
 
-    flat_json = flatten_json(
-        detailed_album_info=detailed_album_info,
+    flattened_track_data = get_flat_track_data(
+        albums_data=detailed_albums_data,
         artist_id=artist_id
     )
 
