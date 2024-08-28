@@ -11,5 +11,15 @@ def spotify_auth():
                     "client_secret": getenv("CLIENT_SECRET"),
                     "grant_type": "client_credentials"}
 
-    response_json = requests.post(url=auth_endpoint, data=request_body, headers=request_headers).json()
-    return response_json
+    try:
+        response_json = requests.post(
+            url=auth_endpoint,
+            data=request_body,
+            headers=request_headers,
+            timeout=0.000000001)
+    except requests.exceptions.ConnectTimeout:
+        raise TimeoutError("The Post request took too long to connect to the Spotify authentication server")
+    except requests.exceptions.ReadTimeout:
+        raise TimeoutError("The Spotify authentication server didn't send any data in the allotted time")
+
+    return response_json.json()
