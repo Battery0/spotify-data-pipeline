@@ -1,15 +1,17 @@
 import requests
 import dotenv
+import base64
 from os import getenv
 
 
 def spotify_auth():
     dotenv.load_dotenv()
+    encoded_client_credentials = base64.b64encode(bytes(f"{getenv('CLIENT_ID')}:{getenv('CLIENT_SECRET')}",
+                                                        "utf-8")).decode("utf-8")
     auth_endpoint = "https://accounts.spotify.com/api/token"
-    request_headers = {"Content-Type": "application/x-www-form-urlencoded"}
-    request_body = {"client_id": getenv("CLIENT_ID"),
-                    "client_secret": getenv("CLIENT_SECRET"),
-                    "grant_type": "client_credentials"}
+    request_headers = {"Content-Type": "application/x-www-form-urlencoded",
+                       "Authorization": f"Basic {encoded_client_credentials}"}
+    request_body = {"grant_type": "client_credentials"}
 
     try:
         response_json = requests.post(
