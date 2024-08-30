@@ -17,16 +17,18 @@ def main():
 
     album_ids = extract_album_id(album_data)
 
-    gcs = upload_to_data_lake(
-        bucket_name="spotify-artist-data",
-        contents_to_upload=str(album_data),
-        data_type="json",
-        destination_blob_name="spotify-artist-complete-album-data"
-    )
-
     detailed_albums_data = spotify_detailed_album_info(
         spotify_auth_json=spotify_auth_json,
         album_ids=album_ids)
+
+    upload_to_data_lake(
+        bucket_name="spotify-artist-data",
+        contents_to_upload={
+            "artist_album_data": album_data,
+            "artist_detailed_album_info": detailed_albums_data
+        },
+        data_type="json",
+    )
 
     flattened_track_data = get_flat_track_data(
         albums_data=detailed_albums_data,
