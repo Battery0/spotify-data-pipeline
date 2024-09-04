@@ -24,7 +24,6 @@ def get_flat_track_data(albums_data, artist_id):
                     "artist_name": artist_names
                 })
 
-    print(flattened_track_data)
     return flattened_track_data
 
 
