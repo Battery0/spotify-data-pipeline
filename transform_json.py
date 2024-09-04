@@ -22,7 +22,6 @@ def get_flat_track_data(albums_data, artist_id):
                     "album_type": album_type
                 })
 
-    print(flattened_track_data)
     return flattened_track_data
 
 
@@ -58,4 +57,4 @@ def extract_label_name(album_data):
 
 
 def extract_album_type(album_data):
-    return album_data["type"]
+    return album_data["album_type"]
