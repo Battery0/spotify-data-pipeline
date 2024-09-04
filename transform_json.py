@@ -13,15 +13,18 @@ def get_flat_track_data(albums_data, artist_id):
                 label_name = extract_label_name(album_data)
                 album_name = extract_album_name(album_data)
                 album_type = extract_album_type(album_data)
+                release_date = extract_album_release_date(album_data)
                 flattened_track_data.append({
                     "upc_num": upc_num,
-                    "artist_name": artist_names,
-                    "track_title": track_title,
                     "label_name": label_name,
+                    "album_type": album_type,
+                    "album_release_date": release_date,
                     "album_name": album_name,
-                    "album_type": album_type
+                    "track_title": track_title,
+                    "artist_name": artist_names
                 })
 
+    print(flattened_track_data)
     return flattened_track_data
 
 
@@ -58,3 +61,7 @@ def extract_label_name(album_data):
 
 def extract_album_type(album_data):
     return album_data["album_type"]
+
+
+def extract_album_release_date(album_data):
+    return album_data["release_date"]
