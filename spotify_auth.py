@@ -1,7 +1,10 @@
+import sys
 import requests
+from requests.exceptions import ConnectTimeout, ReadTimeout, ConnectionError
 import dotenv
 import base64
 from os import getenv
+import time
 
 
 def spotify_auth():
@@ -12,23 +15,33 @@ def spotify_auth():
     request_headers = {"Content-Type": "application/x-www-form-urlencoded",
                        "Authorization": f"Basic {encoded_client_credentials}"}
     request_body = {"grant_type": "client_credentials"}
+    max_tries = 3
+    retry_connection_seconds = 10
 
-    try:
-        response_json = requests.post(
-            url=auth_endpoint,
-            data=request_body,
-            headers=request_headers,
-            timeout=10)
+    for attempt in range(max_tries):
+        try:
+            response_json = requests.post(
+                url=auth_endpoint,
+                data=request_body,
+                headers=request_headers,
+                timeout=10)
 
-        response_json.raise_for_status()
-    except requests.exceptions.ConnectTimeout as e:
-        print(f"The Post request took too long to connect to the Spotify authentication server:\n  {e}")
-        raise TimeoutError
-    except requests.exceptions.ReadTimeout as e:
-        print(f"The Spotify authentication server didn't send any data in the allotted time:\n  {e}")
-        raise TimeoutError
-    except requests.HTTPError as e:
-        print(f"Error with HTTP request:\n  {e}")
-        raise requests.HTTPError
-    else:
-        return response_json.json()
+            response_json.raise_for_status()
+
+        except (ConnectTimeout, ReadTimeout, ConnectionError) as e:
+            print(f"Connection error. Attempt {attempt + 1} of {max_tries}. "
+                  f"Retrying authentication in {retry_connection_seconds} seconds")
+
+            if attempt < max_tries - 1:
+                time.sleep(retry_connection_seconds)
+                continue
+            else:
+                print(f"Max retries ({max_tries}) occured. Error:\n  {e}")
+                sys.exit("Failed to authenticate with Spotify")
+
+        except requests.HTTPError as e:
+            print(f"Error with HTTP request:\n  {e}")
+            sys.exit("Error with HTTP status code")
+
+        else:
+            return response_json.json()
