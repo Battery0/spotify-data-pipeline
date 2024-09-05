@@ -1,3 +1,4 @@
+from big_query import upload_to_big_query
 from data_lake_storage import upload_to_data_lake
 from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from spotify_auth import spotify_auth
@@ -34,6 +35,8 @@ def main():
         albums_data=detailed_albums_data,
         artist_id=artist_id
     )
+
+    upload_to_big_query(flattened_track_data)
 
 
 if __name__ == '__main__':
