@@ -1,5 +1,6 @@
 from big_query import upload_to_big_query
 from data_lake_storage import upload_to_data_lake
+from data_transform import data_transform
 from spotify_artist_albums import spotify_album_data, extract_album_id, spotify_detailed_album_info
 from spotify_auth import spotify_auth
 from transform_json import get_flat_track_data
@@ -36,7 +37,9 @@ def main():
         artist_id=artist_id
     )
 
-    upload_to_big_query(flattened_track_data)
+    data_transformed_for_big_query = data_transform(flattened_track_data)
+
+    # upload_to_big_query(data_transformed_for_big_query)
 
 
 if __name__ == '__main__':
