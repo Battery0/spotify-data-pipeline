@@ -39,7 +39,7 @@ def main():
 
     data_transformed_for_big_query = data_transform(flattened_track_data)
 
-    # upload_to_big_query(data_transformed_for_big_query)
+    upload_to_big_query(data_transformed_for_big_query)
 
 
 if __name__ == '__main__':

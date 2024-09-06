@@ -1,8 +1,7 @@
 from google.cloud import bigquery
-import pandas as pd
 
 
-def upload_to_big_query(artist_album_data):
+def upload_to_big_query(data_transformed_for_big_query):
     # create client object to interact with BQ
     client = bigquery.Client()
 
@@ -14,7 +13,11 @@ def upload_to_big_query(artist_album_data):
 
     # create job and make API request to load artist album data to BQ
     job_config = bigquery.LoadJobConfig(schema=schema, write_disposition="WRITE_TRUNCATE")
-    job = client.load_table_from_dataframe(dataframe=df, destination=table_id, job_config=job_config)
+    job = client.load_table_from_dataframe(
+        dataframe=data_transformed_for_big_query,
+        destination=table_id,
+        job_config=job_config
+    )
     job.result()  # Wait for the job to complete.
 
     # check table was created and print info
