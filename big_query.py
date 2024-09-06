@@ -12,8 +12,6 @@ def upload_to_big_query(artist_album_data):
     # get the table schema
     schema = database_table_schema()
 
-    df = pd.DataFrame(artist_album_data)
-
     # create job and make API request to load artist album data to BQ
     job_config = bigquery.LoadJobConfig(schema=schema, write_disposition="WRITE_TRUNCATE")
     job = client.load_table_from_dataframe(dataframe=df, destination=table_id, job_config=job_config)
@@ -26,7 +24,7 @@ def upload_to_big_query(artist_album_data):
 
 def database_table_schema():
     schema = [
-        bigquery.SchemaField(name="upc_num", field_type="STRING", mode="REQUIRED",
+        bigquery.SchemaField(name="upc_num", field_type="INTEGER", mode="REQUIRED",
                              description="Album unique UPC number"),
         bigquery.SchemaField(name="label_name", field_type="STRING", mode="REQUIRED",
                              description="Record label"),
