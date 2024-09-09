@@ -46,7 +46,7 @@ def chunk_album_ids(album_id):
     return split_ids
 
 
-def spotify_detailed_album_info(spotify_auth_json, album_ids):
+def spotify_detailed_album_data(spotify_auth_json, album_ids):
     bearer_token = spotify_auth_json["access_token"]
     headers = {"Authorization": f"Bearer {bearer_token}"}
     detailed_album_data = []
