@@ -27,21 +27,17 @@ def spotify_auth():
                 timeout=10)
 
             response_json.raise_for_status()
-
         except (ConnectTimeout, ReadTimeout, ConnectionError) as e:
             print(f"Connection error. Attempt {attempt + 1} of {max_tries}. "
                   f"Retrying authentication in {retry_connection_seconds} seconds")
-
             if attempt < max_tries - 1:
                 time.sleep(retry_connection_seconds)
                 continue
             else:
                 print(f"Max retries ({max_tries}) occured. Error:\n  {e}")
                 sys.exit("Failed to authenticate with Spotify")
-
         except requests.HTTPError as e:
             print(f"Error with HTTP request:\n  {e}")
             sys.exit("Error with HTTP status code")
-
         else:
             return response_json.json()
