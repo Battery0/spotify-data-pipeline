@@ -29,7 +29,6 @@ def extract_album_and_track_metadata(album_and_track_metadata, detailed_album_me
             combined_track_album_metadata = track_metadata | album_metadata
             extracted_track_and_album_metadata.append(combined_track_album_metadata)
 
-    print(extracted_track_and_album_metadata)
     return extracted_track_and_album_metadata
 
 

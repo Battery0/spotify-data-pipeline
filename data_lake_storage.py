@@ -8,3 +8,5 @@ def upload_to_data_lake(bucket_name, contents_to_upload, data_type):
     for key, value in contents_to_upload.items():
         blob = bucket.blob(key)
         blob.upload_from_string(data=str(value), content_type=data_type)
+
+        print(f"{key} uploaded to {bucket_name}.")

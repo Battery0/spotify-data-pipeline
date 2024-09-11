@@ -20,13 +20,11 @@ def main():
 
     grouped_album_ids = extract_album_ids(high_level_album_metadata)
 
-    # contains all albums artist appears on
     detailed_album_metadata = detailed_spotify_album_metadata(
         spotify_auth_json=spotify_auth_json,
         grouped_album_ids=grouped_album_ids
     )
 
-    # contains only track id's of track for the artist we are interested in
     grouped_artist_track_ids = extract_artist_track_ids(
         detailed_albums_metadata=detailed_album_metadata,
         artist_id=artist_id
@@ -36,15 +34,15 @@ def main():
 
     extracted_metadata = extract_album_and_track_metadata(album_and_track_metadata, detailed_album_metadata)
 
-    # # ***** Add call to tracks to upload to GCS *****
-    # upload_to_data_lake(
-    #     bucket_name="spotify-artist-data",
-    #     contents_to_upload={
-    #         "artist_album_data": album_data,
-    #         "artist_detailed_album_info": detailed_albums_data # this needs removing and updating with detailed track metadata
-    #     },
-    #     data_type="json",
-    # )
+    upload_to_data_lake(
+        bucket_name="spotify-artist-data",
+        contents_to_upload={
+            "artist_high_level_album_metadata": high_level_album_metadata,
+            "artist_detailed_album_metadata": detailed_album_metadata,
+            "artist_track_and_album_metadata": album_and_track_metadata
+        },
+        data_type="json",
+    )
 
 
 
