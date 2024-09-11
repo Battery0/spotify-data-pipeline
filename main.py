@@ -32,8 +32,6 @@ def main():
 
     album_and_track_metadata = spotify_track_and_album_metadata(spotify_auth_json, grouped_artist_track_ids)
 
-    extracted_metadata = extract_album_and_track_metadata(album_and_track_metadata, detailed_album_metadata)
-
     upload_to_data_lake(
         bucket_name="spotify-artist-data",
         contents_to_upload={
@@ -44,12 +42,11 @@ def main():
         data_type="json",
     )
 
+    extracted_flattened_metadata = extract_album_and_track_metadata(album_and_track_metadata, detailed_album_metadata)
 
+    metadata_transformed_for_big_query = data_transform(extracted_flattened_metadata)
 
-
-    # data_transformed_for_big_query = data_transform(flattened_track_data)
-    #
-    # upload_to_big_query(data_transformed_for_big_query)
+    upload_to_big_query(metadata_transformed_for_big_query)
 
 
 if __name__ == '__main__':
