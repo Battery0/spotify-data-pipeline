@@ -1,5 +1,5 @@
 import requests
-from grouping_ids import _grouped_album_ids
+from grouping_ids import _grouped_ids
 
 
 def detailed_spotify_album_metadata(spotify_auth_json, grouped_album_ids):
@@ -18,17 +18,17 @@ def detailed_spotify_album_metadata(spotify_auth_json, grouped_album_ids):
     return detailed_album_metadata
 
 
-def extract_track_ids(detailed_albums_metadata, artist_id):
-    track_ids = []
+def extract_artist_track_ids(detailed_albums_metadata, artist_id):
+    artist_track_ids = []
 
     for set_of_albums in detailed_albums_metadata:
         for album in set_of_albums["albums"]:
             for track in album["tracks"]["items"]:
                 id_check = _artist_id_check(track_metadata=track, artist_id=artist_id)
-                if id_check: track_ids.append(track["id"])
+                if id_check: artist_track_ids.append(track["id"])
 
-    grouped_track_ids = _grouped_album_ids(ids=track_ids, max_limit=50)
-    return grouped_track_ids
+    grouped_artist_track_ids = _grouped_ids(ids=artist_track_ids, max_limit=50)
+    return grouped_artist_track_ids
 
 
 def _artist_id_check(track_metadata, artist_id):

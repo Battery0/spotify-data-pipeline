@@ -1,5 +1,5 @@
 import requests
-from grouping_ids import _grouped_album_ids
+from grouping_ids import _grouped_ids
 
 
 def high_level_spotify_album_metadata(spotify_auth_json, artist_id, group_type):
@@ -31,5 +31,5 @@ def extract_album_ids(high_level_album_metadata):
         for album in album_type["items"]:
             album_ids.append(album["id"])
 
-    grouped_album_ids = _grouped_album_ids(ids=album_ids, max_limit=20)
+    grouped_album_ids = _grouped_ids(ids=album_ids, max_limit=20)
     return grouped_album_ids
