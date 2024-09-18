@@ -2,26 +2,19 @@ from google.cloud import bigquery
 
 
 def upload_to_big_query(data_transformed_for_big_query):
-    # create client object to interact with BQ
     client = bigquery.Client()
-
-    # Set table_id to the ID of the table to create.
     table_id = "focal-cipher-432312-h8.spotify_album_data.aphex_twin_album_data"
-
-    # get the table schema
     schema = database_table_schema()
 
-    # create job and make API request to load artist album data to BQ
     job_config = bigquery.LoadJobConfig(schema=schema, write_disposition="WRITE_TRUNCATE")
     job = client.load_table_from_dataframe(
         dataframe=data_transformed_for_big_query,
         destination=table_id,
         job_config=job_config
     )
-    job.result()  # Wait for the job to complete.
+    job.result()
 
-    # check table was created and print info
-    table = client.get_table(table_id)  # Make an API request.
+    table = client.get_table(table_id)
     print("Loaded {} rows and {} columns to {} into BigQuery".format(table.num_rows, len(table.schema), table_id))
 
 

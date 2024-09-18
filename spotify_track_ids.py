@@ -34,7 +34,6 @@ def extract_artist_track_ids(detailed_albums_metadata, artist_id):
 def _artist_id_check(track_metadata, artist_id):
     artist_on_track = []
 
-    # maybe do an if artist on track, then append. rather than doing the any(artist_on_track)
     for artist in track_metadata["artists"]:
         artist_on_track.append(artist["id"] == artist_id)
 
