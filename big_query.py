@@ -1,10 +1,10 @@
 from google.cloud import bigquery
 
 
-def upload_metadata_to_big_query(data_transformed_for_big_query):
+def upload_metadata_to_big_query(data_transformed_for_big_query, table_id, table_schema):
     client = bigquery.Client()
-    table_id = "focal-cipher-432312-h8.spotify_album_data.aphex_twin_album_data"
-    schema = database_table_schema()
+    table_id = table_id
+    schema = table_schema
 
     job_config = bigquery.LoadJobConfig(schema=schema, write_disposition="WRITE_TRUNCATE")
     job = client.load_table_from_dataframe(

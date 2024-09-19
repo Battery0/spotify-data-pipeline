@@ -1,4 +1,4 @@
-from big_query import upload_metadata_to_big_query
+from big_query import upload_metadata_to_big_query, database_table_schema
 from data_lake_storage import upload_metadata_to_gcs
 from data_transform import data_transform
 from spotify_album_ids import high_level_spotify_album_metadata, extract_album_ids
@@ -42,11 +42,17 @@ def main():
         data_type="json"
     )
 
-    extracted_flattened_metadata = extract_album_and_track_metadata(album_and_track_metadata, detailed_album_metadata)
+    extracted_flattened_metadata = extract_album_and_track_metadata(
+        album_and_track_metadata=album_and_track_metadata,
+        detailed_album_metadata=detailed_album_metadata)
 
-    metadata_transformed_for_big_query = data_transform(extracted_flattened_metadata)
+    metadata_transformed_for_big_query = data_transform(flattened_track_data=extracted_flattened_metadata)
 
-    upload_metadata_to_big_query(metadata_transformed_for_big_query)
+    upload_metadata_to_big_query(
+        data_transformed_for_big_query=metadata_transformed_for_big_query,
+        table_id="focal-cipher-432312-h8.spotify_album_data.aphex_twin_album_data",
+        table_schema=database_table_schema()
+    )
 
 
 if __name__ == "__main__":
