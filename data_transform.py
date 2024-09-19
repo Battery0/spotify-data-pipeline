@@ -4,10 +4,6 @@ import pandas as pd
 def data_transform(flattened_track_data):
     df = pd.DataFrame(flattened_track_data)
 
-    return cast_data_types(df)
-
-
-def cast_data_types(df):
     data_type_casting = df.astype(
         {
             "track_isrc_number": "string",
@@ -22,4 +18,3 @@ def cast_data_types(df):
     )
 
     return data_type_casting
-
