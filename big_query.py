@@ -15,7 +15,7 @@ def upload_metadata_to_big_query(data_transformed_for_big_query):
     job.result()
 
     table = client.get_table(table_id)
-    print("Loaded {} rows and {} columns to {} into BigQuery".format(table.num_rows, len(table.schema), table_id))
+    print("Loaded {} rows and {} columns to table: {} in BigQuery".format(table.num_rows, len(table.schema), table_id))
 
 
 def database_table_schema():
