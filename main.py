@@ -1,5 +1,5 @@
-from big_query import upload_to_big_query
-from data_lake_storage import upload_to_data_lake
+from big_query import upload_metadata_to_big_query
+from data_lake_storage import upload_metadata_to_gcs
 from data_transform import data_transform
 from spotify_album_ids import high_level_spotify_album_metadata, extract_album_ids
 from spotify_auth import spotify_auth
@@ -32,7 +32,7 @@ def main():
 
     album_and_track_metadata = spotify_track_and_album_metadata(spotify_auth_json, grouped_artist_track_ids)
 
-    upload_to_data_lake(
+    upload_metadata_to_gcs(
         bucket_name="spotify-artist-data",
         contents_to_upload={
             "artist_high_level_album_metadata": high_level_album_metadata,
@@ -46,7 +46,7 @@ def main():
 
     metadata_transformed_for_big_query = data_transform(extracted_flattened_metadata)
 
-    upload_to_big_query(metadata_transformed_for_big_query)
+    upload_metadata_to_big_query(metadata_transformed_for_big_query)
 
 
 if __name__ == "__main__":

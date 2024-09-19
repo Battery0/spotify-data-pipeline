@@ -1,7 +1,7 @@
 from google.cloud import storage
 
 
-def upload_to_data_lake(bucket_name, contents_to_upload, data_type):
+def upload_metadata_to_gcs(bucket_name, contents_to_upload, data_type):
     storage_client = storage.Client(project="focal-cipher-432312-h8")
     bucket = storage_client.bucket(bucket_name)
 
