@@ -8,8 +8,9 @@ def high_level_spotify_album_metadata(spotify_auth_json, artist_id, group_type):
     high_level_album_metadata = []
 
     for album_type in group_type:
-        album_type_endpoint = \
+        album_type_endpoint = (
             f"https://api.spotify.com/v1/artists/{artist_id}/albums?&limit=50&include_groups={album_type}&market=GB"
+        )
         response_json = requests.get(url=album_type_endpoint, headers=headers).json()
 
         if response_json["next"] is None:

@@ -39,7 +39,7 @@ def main():
             "artist_detailed_album_metadata": detailed_album_metadata,
             "artist_track_and_album_metadata": album_and_track_metadata
         },
-        data_type="json",
+        data_type="json"
     )
 
     extracted_flattened_metadata = extract_album_and_track_metadata(album_and_track_metadata, detailed_album_metadata)
