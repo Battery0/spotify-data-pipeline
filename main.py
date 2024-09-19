@@ -49,5 +49,5 @@ def main():
     upload_to_big_query(metadata_transformed_for_big_query)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
